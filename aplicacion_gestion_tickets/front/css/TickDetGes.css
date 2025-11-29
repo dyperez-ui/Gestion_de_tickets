@@ -1,0 +1,99 @@
+/* ===== GENERAL ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: #17a2b8;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    margin: 0;
+}
+
+/* Botón volver */
+.btn-back {
+    background: white;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/271/271220.png');
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.btn-back:hover {
+    background-color: #e2e2e2;
+}
+
+/* ===== CONTENEDOR ===== */
+.container {
+    width: 90%;
+    margin: 25px auto;
+    display: grid;
+    gap: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #17a2b833;
+    padding-bottom: 6px;
+}
+
+/* ===== INFO TICKET ===== */
+.card p {
+    margin: 6px 0;
+}
+
+textarea {
+    width: 100%;
+    height: 90px;
+    resize: none;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+/* ===== BOTÓN ===== */
+button {
+    background: #17a2b8;
+    border: none;
+    padding: 10px 18px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #117783;
+}
+
+/* ===== MENSAJE ===== */
+.msg {
+    margin-top: 10px;
+    font-size: 14px;
+    color: green;
+}

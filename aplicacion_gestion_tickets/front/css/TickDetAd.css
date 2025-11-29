@@ -1,0 +1,122 @@
+/* ===== GENERAL ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: #007bff;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    margin: 0;
+}
+
+/* Botón volver */
+.btn-back {
+    background: white;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/271/271220.png');
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.btn-back:hover {
+    background-color: #e2e2e2;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.container {
+    width: 90%;
+    margin: 25px auto;
+    display: grid;
+    gap: 20px;
+}
+
+/* ===== CARD GENERAL ===== */
+.card {
+    background: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #007bff33;
+    padding-bottom: 6px;
+}
+
+/* ===== INFO DEL TICKET ===== */
+.descripcion {
+    background: #f0f2f5;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* ===== SELECTS Y TEXTAREAS ===== */
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: none;
+    height: 90px;
+}
+
+/* ===== BOTONES ===== */
+button {
+    background: #007bff;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* ===== MENSAJES ===== */
+.msg {
+    margin-top: 8px;
+    font-size: 14px;
+    color: green;
+}
+
+/* ===== ACTIVIDADES ===== */
+.actividades {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.actividades li {
+    background: #eef3f5;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}

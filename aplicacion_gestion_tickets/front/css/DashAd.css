@@ -1,0 +1,125 @@
+/* ======= GENERAL ======= */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+}
+
+/* ======= HEADER ======= */
+.header {
+    background: #007bff;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    margin: 0;
+}
+
+.logout {
+    background: #ff4d4d;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background: #cc0000;
+}
+
+/* ======= BOTÓN GESTIÓN USUARIOS ======= */
+.acciones-admin {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btnUsuarios {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btnUsuarios:hover {
+    background-color: #1e7e34;
+}
+
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* ======= FILTROS ======= */
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+    flex: 1;
+}
+
+/* ======= CARD ======= */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* ======= TABLA ======= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table thead {
+    background: #007bff;
+    color: white;
+}
+
+table th,
+table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+table tr:hover {
+    background: #f1f1f1;
+}
+
+/* Botón acción */
+.btnAccion {
+    background: #007bff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.btnAccion:hover {
+    background: #0056b3;
+}

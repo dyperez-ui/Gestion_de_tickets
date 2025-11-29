@@ -1,10 +1,8 @@
 <?php
 namespace App\Middleware;
 
-use App\Models\AuthToken;
 use App\Models\AuthTokenUser;
 use App\Models\User;
-use App\Models\Usuario;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
@@ -24,7 +22,7 @@ class Authorization implements MiddlewareInterface
                             ->withHeader('Content-Type', 'application/json');
         }
         // Extraer token real
-        $token = trim(str_replace('Bearer', '', $authHeader));
+        $token = str_replace('Bearer', '', $authHeader);
         // Buscar token en base de datos
         $tokenData = AuthTokenUser::where('token', $token)->first();
         if (!$tokenData) {
