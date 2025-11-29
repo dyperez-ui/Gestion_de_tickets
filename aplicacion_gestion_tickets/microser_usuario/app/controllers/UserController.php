@@ -1,0 +1,120 @@
+<?php
+namespace App\Controllers;
+use App\Models\AuthTokenUser;
+use App\Models\User;
+
+class UserController
+{
+    public function getUsuarios()
+    {
+        $rows = User::all();
+        return $rows->isEmpty() ? null : $rows->toJson();
+    }
+
+    public function registrarUsuario($data)
+    {
+        if (
+            empty($data['name']) ||
+            empty($data['email']) ||
+            empty($data['password']) ||
+            empty($data['role'])
+        ) {
+            return ['error' => 'Todos los campos son obligatorios.', 'status' => 400];
+        }
+
+        // Validar existencia de email
+        if (User::where('email', $data['email'])->exists()) {
+            return ['error' => 'El email ya está registrado.', 'status' => 409];
+        }
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        // Crear usuario
+        $user = User::create($data);
+        return [
+            'message' => 'Usuario registrado correctamente.',
+            'user' => $user,
+            'status' => 201
+        ];
+    }
+    public function login($data)
+    {
+        if (empty($data['email']) || empty($data['password'])) {
+            return ['error' => 'Email y password son obligatorios.', 'status' => 400];
+        }
+        // Buscar usuario por email
+        $user = User::where('email', $data['email'])->first();
+        if (!$user) {
+            return ['error' => 'El email no está registrado.', 'status' => 404];
+        }
+        // Verificar contraseña (detectando si está hasheada o es texto plano)
+        // Caso 1: contraseña hasheada 
+        if (str_starts_with($user->password, '$2y$')) {
+            if (!password_verify($data['password'], $user->password)) {
+                return ['error' => 'Contraseña incorrecta.', 'status' => 401];
+            }
+        } else {
+            // Caso 2: contraseña en texto plano (como viene en la BD del PDF)
+            if ($data['password'] !== $user->password) {
+                return ['error' => 'Contraseña incorrecta.', 'status' => 401];
+            }
+        }
+        // Generar token aleatorio
+        $token = bin2hex(random_bytes(32)); // 64 caracteres
+        // Guardar token en tabla auth_tokens
+        AuthTokenUser::create([
+            'user_id' => $user->id,
+            'token'   => $token
+        ]);
+        return [
+            'message' => 'Login exitoso.',
+            'token'   => $token,
+            'user'    => [
+                'id'    => $user->id,
+                'name'  => $user->name,
+                'email' => $user->email,
+                'role'  => $user->role
+            ],
+            'status' => 200
+        ];
+    }
+    public function getProfile($user)
+    {
+        return [
+            'id' => $user['id'],
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'role' => $user['role']
+        ];
+    }
+    public function getUsuarioById($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return null;
+        }
+        return $user;
+    }
+    public function actualizarUsuario($id, $data)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return null;
+        }
+        // Actualizar solo campos permitidos
+        $user->name = $data['name'] ?? $user->name;
+        $user->email = $data['email'] ?? $user->email;
+        if (isset($data['password'])) {
+            $user->password = password_hash($data['password'], PASSWORD_BCRYPT);
+        }
+        $user->save();
+        return $user;
+    }
+    public function eliminarUsuario($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return false;
+        }
+        $user->delete();
+        return true;
+    }
+}

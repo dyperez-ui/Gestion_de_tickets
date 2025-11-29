@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Auttoken extends Model
+class AuthTokenUser extends Model
 {
     protected $table = 'auth_tokens';
 

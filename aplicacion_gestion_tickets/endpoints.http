@@ -1,0 +1,206 @@
+
+#php -S 127.0.0.1:5500 ( para front)
+
+#http://127.0.0.1:5500/index.html
+
+#php -S 127.0.0.1:8000 -t public (para usuarios)
+
+#php -S 127.0.0.1:8001 -t public (para tickets)
+
+
+#----------------------------USUARIOS----------------------------------
+
+#Prueba del microservicio usuarios
+GET http://127.0.0.1:8000
+
+### Consultar todos los usuarios
+GET http://127.0.0.1:8000/microser_usuario/all
+
+### Registrar un nuevo usuario
+POST http://127.0.0.1:8000/microser_usuario/register
+Content-Type: application/json
+
+{
+    "name": "Juan Pérez",
+    "email": "juan@example.com",
+    "password": "123456",
+    "role": "gestor"
+}
+### Login de usuario
+POST http://127.0.0.1:8000/microser_usuario/login
+Content-Type: application/json
+
+{
+    "email": "juan@example.com",
+    "password": "123456"
+}
+### Consultar todos los usuarios con token
+GET http://127.0.0.1:8000/microser_usuario/all
+Authorization: Bearer token_gestor_1_abc123
+
+### Login admin
+POST http://127.0.0.1:8000/microser_usuario/login
+Content-Type: application/json
+
+{
+    "email": "admin1@example.com",
+    "password": "password123"
+}
+### Consultar todos los usuarios con token de admin
+GET http://127.0.0.1:8000/microser_usuario/all
+Authorization: Bearer token_admin_1_xyz789
+
+### Consultar con token de gestor (no deja)
+GET http://127.0.0.1:8000/microser_usuario/all
+Authorization: Bearer token_gestor_1_abc123
+
+### Consultar mi perfil
+GET http://127.0.0.1:8000/microser_usuario/profile
+Authorization: Bearer token_admin_1_xyz789
+
+###Consultar usuario por id con token admin
+GET http://127.0.0.1:8000/microser_usuario/4
+Authorization: Bearer token_admin_1_xyz789
+
+###Consultar usuario con token gestor (Solo muestra el propio)
+GET http://127.0.0.1:8000/microser_usuario/3
+Authorization: Bearer token_gestor_1_abc123
+
+### Actualizar usuario por id
+PUT http://127.0.0.1:8000/microser_usuario/4
+Content-Type: application/json
+Authorization: Bearer token_admin_1_xyz789
+
+{
+    "name": "Jhoel Olmos"
+}
+
+###Actualizar usuario con token gestor (Solo deja el propio)
+PUT http://127.0.0.1:8000/microser_usuario/1
+Content-Type: application/json
+Authorization: Bearer token_gestor_1_abc123
+
+{
+    "name": "Juan gestor"
+}
+
+###Elimiar al usuario por id
+DELETE http://127.0.0.1:8000/microser_usuario/4
+Authorization: Bearer token_admin_1_xyz789
+
+###Prueba de logout
+POST http://127.0.0.1:8000/microser_usuario/logout
+Authorization: Bearer token
+
+###validar token
+GET http://127.0.0.1:8000/microser_usuario/validate-token
+Authorization: Bearer TU_TOKEN
+# token_gestor_1_abc123
+# token_admin_1_xyz789
+
+#------------------------------TICKETS----------------------------------
+
+###Test tickets (solo gestor)
+GET http://127.0.0.1:8001/microser_tickets/mine
+Authorization: Bearer token_gestor_1_abc123
+
+###Consultar ticket admin
+GET http://127.0.0.1:8001/microser_tickets/all
+Authorization: Bearer token_admin_1_xyz789  
+
+###COnsultar actividades (el gestor solo puede ver las que él creó)
+GET http://127.0.0.1:8001/microser_tickets/1
+Authorization: Bearer token_gestor_1_abc123  
+
+###Ticket asignado
+PUT http://127.0.0.1:8001/microser_tickets/1/assign
+Authorization: Bearer token_admin_1_xyz789  
+Content-Type: application/json
+
+{
+    "admin_id": 3
+}
+
+
+###Iniciar sesion como admin
+POST http://127.0.0.1:8000/microser_usuario/login
+Content-Type: application/json
+
+{
+    "email": "admin1@example.com",
+    "password": "password123"
+}
+
+### Cambiar estado (del token creado antes)
+PUT http://127.0.0.1:8001/microser_tickets/1/estado
+Authorization: Bearer token_admin_1_xyz789 
+Content-Type: application/json
+
+{
+    "estado": "en_progreso"
+}
+
+### Consultar actividades de un ticket
+http://127.0.0.1:8001/microser_tickets/1/actividades
+Authorization: Bearer token_admin_1_xyz789 
+
+### Agregar comentario a un ticket
+POST http://127.0.0.1:8001/microser_tickets/1/comentarios
+Authorization: Bearer token_admin_1_xyz789
+Content-Type: application/json
+
+{
+  "mensaje": "Cliente respondió adjuntando evidencia."
+}
+
+### Asignar gestor a un ticket
+PUT http://127.0.0.1:8001/microser_tickets/1/assign
+Authorization: Bearer token_admin_1_xyz789
+Content-Type: application/json
+
+{
+  "admin_id": 3
+}
+
+### Agregar actividad a un ticket
+POST http://127.0.0.1:8001/microser_tickets/1/actividad
+Authorization: Bearer token_gestor_1_abc123
+Content-Type: application/json
+
+{
+  "mensaje": "El equipo de soporte está revisando el problema."
+}
+
+### Agregar comentario a un ticket (gestor en su propio ticket)
+POST http://127.0.0.1:8001/microser_tickets/1/comentarios
+Authorization: Bearer token_gestor_1_abc123
+Content-Type: application/json
+
+{
+  "mensaje": "Estoy teniendo este problema..."
+}
+### Buscar tickets por estado, gestor o admin
+GET http://127.0.0.1:8001/microser_tickets/search?estado=en_progreso
+Authorization: Bearer token_admin_1_xyz789
+
+###Buscar tickets por creador
+GET http://127.0.0.1:8001/microser_tickets/search?gestor_id=3
+Authorization: Bearer token_admin_1_xyz789
+###Buscar tickets por admin asignado
+GET http://127.0.0.1:8001/microser_tickets/search?admin_id=1
+Authorization: Bearer token_admin_1_xyz789
+
+###Buscar tickets por estado (gestor)
+GET http://127.0.0.1:8001/microser_tickets/search?estado=abierto
+Authorization: Bearer token_gestor_1_abc123
+
+
+
+
+
+
+
+
+
+
+
