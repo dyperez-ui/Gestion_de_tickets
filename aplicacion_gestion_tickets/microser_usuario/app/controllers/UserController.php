@@ -100,8 +100,10 @@ class UserController
             return null;
         }
         // Actualizar solo campos permitidos
-        $user->name = $data['name'] ?? $user->name;
-        $user->email = $data['email'] ?? $user->email;
+        $user->name = $data['name'] ?? $user  -> name;
+        $user->email = $data['email'] ?? $user-> email;
+        $user->role = $data['role'] ?? $user -> role ;
+
         if (isset($data['password'])) {
             $user->password = password_hash($data['password'], PASSWORD_BCRYPT);
         }
