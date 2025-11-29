@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../config/database.php';
+require __DIR__ . '/../app/config/database.php';
 
 
 
@@ -15,7 +15,7 @@ $app = AppFactory::create();
 
 $app->addBodyParsingMiddleware();//lee lo que llega si es un json o cosas asi y lo vuelve para ser usable en php
 
-$app->options('/{routes:.+}', function ($request, $response) {
+$app->options('/{routes:.}', function ($request, $response) {
     return $response;
 });
 

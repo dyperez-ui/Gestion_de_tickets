@@ -5,11 +5,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
-use App\Middleware\AuthMiddleware;
 use App\Middleware\Authorization;
-use App\Middleware\Rol;
 use App\Middleware\Role;
-use App\Middleware\RoleMiddleware;
+
 
 return function (App $app) {
 
@@ -27,6 +25,7 @@ return function (App $app) {
             ->add(new Authorization());
 
         $group->post('/register', [UserRepository::class, 'registrarUsuario']);
+
         $group->post('/login', [UserRepository::class, 'login']);
 
         $group->get('/profile', [UserRepository::class, 'miPerfil'])
